@@ -6,10 +6,17 @@
   <title>API Console</title>
   <link href="styles/api-console-light-theme.css" rel="stylesheet" class="theme">
 </head>
-<body ng-app="ramlConsoleApp" ng-cloak class="raml-console-body">
-  <raml-initializer></raml-initializer>
+<body ng-app="ramlConsoleApp" ng-controller="teste" ng-cloak class="raml-console-body">
+  <raml-console data="raml"></raml-console>
   <script src="scripts/api-console-vendor.js"></script>
   <script src="scripts/api-console.js"></script>
+  <script type="text/javascript">
+    angular.module("ramlConsoleApp").controller("teste", function($http, $scope){
+      $http.get("/examples/github.raml").then(function(raml){
+        $scope.raml = raml.data;
+      });
+    });
+  </script>
   <script>
     $.noConflict();
   </script>

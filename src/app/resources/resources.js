@@ -151,7 +151,7 @@
 
         ramlParserWrapper.onParseSuccess(createRamlConsole);
 
-        $scope.$watch("data", function(newValue){
+        $scope.$watch('data', function(newValue){
           if(newValue){
             createRamlConsole(ramlParserWrapper.parse(newValue));
           }
