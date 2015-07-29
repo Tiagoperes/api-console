@@ -7,7 +7,8 @@
       templateUrl: 'resources/resources.tpl.html',
       replace: true,
       scope: {
-        src: '@'
+        src: '@',
+        data: '='
       },
       controller: function($scope, $window, $attrs) {
         $scope.proxy                  = $window.RAML.Settings.proxy;
@@ -127,7 +128,8 @@
         };
       },
       link: function($scope) {
-        ramlParserWrapper.onParseSuccess(function(raml) {
+
+        function createRamlConsole(raml){
           $scope.raml         = RAML.Inspector.create(raml);
           $scope.rawRaml      = raml;
           $scope.loaded       = true;
@@ -144,6 +146,14 @@
             for (var j = 0; j < $scope.raml.documentation.length; j++) {
               $scope.documentList.push($scope.documentationCollapsed ? true : false);
             }
+          }
+        }
+
+        ramlParserWrapper.onParseSuccess(createRamlConsole);
+
+        $scope.$watch("data", function(newValue){
+          if(newValue){
+            createRamlConsole(ramlParserWrapper.parse(newValue));
           }
         });
       }
